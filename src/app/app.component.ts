@@ -30,7 +30,8 @@ export class MyApp {
 
     // Initialize all the pages
     this.pages = [
-      { title: 'Search', component: SearchPage }
+      { title: 'Rechercher', component: SearchPage },
+      { title: 'Accueil', component: HomePage }
     ]
   }
 
