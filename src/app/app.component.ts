@@ -15,7 +15,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav
 
   // Sets the root page
-  rootPage:any = HomePage
+  rootPage: any = HomePage
 
   // Array to declare all the app pages
   pages: Array<{title: string, component: any}>
