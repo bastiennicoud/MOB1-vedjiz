@@ -21,6 +21,21 @@ export class User {
   /**
    * User adress
    */
-  private address: Array<{ zip: number, city: string, road: string }>
+  private address: string
+
+  /**
+   * Constructor
+   *
+   * @param firstName
+   * @param lastName
+   * @param phone
+   * @param address
+   */
+  constructor (firstName: string, lastName: string, phone: string, address: string) {
+    this.firstName = firstName
+    this.lastName  = lastName
+    this.phone     = phone
+    this.address   = address
+  }
 
 }

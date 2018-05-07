@@ -10,4 +10,18 @@ export class Supplier extends User {
    */
   private companyName: string
 
+  /**
+   * Constructor
+   *
+   * @param firstName
+   * @param lastName
+   * @param phone
+   * @param address
+   * @param companyName
+   */
+  constructor (firstName: string, lastName: string, phone: string, address: string, companyName: string) {
+    super(firstName, lastName, phone, address)
+    this.companyName = companyName
+  }
+
 }

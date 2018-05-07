@@ -35,4 +35,16 @@ export class Product {
    */
   private suppliers: Array<Supplier>
 
+  constructor (name: string, price: number, unit: string, stock: number, picturePath: string, suppliers: Array<Supplier> = []) {
+    this.name        = name
+    this.price       = price
+    this.unit        = unit
+    this.stock       = stock
+    this.picturePath = picturePath
+    this.suppliers   = suppliers
+  }
+
+  addSupplier (supplier: Supplier) {
+    this.suppliers.push(supplier)
+  }
 }
