@@ -57,4 +57,16 @@ export class DataProvider {
     return this.users
   }
 
+  public getProduct (id: number) {
+    return this.products[id]
+  }
+
+  public getSupplier (id: number) {
+    return this.suppliers[id]
+  }
+
+  public getUser (id: number) {
+    return this.users[id]
+  }
+
 }
