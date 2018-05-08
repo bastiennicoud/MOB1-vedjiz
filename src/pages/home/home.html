@@ -10,30 +10,21 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngFor="let product of products">
-    <img src="assets/imgs/{{ product.picturePath }}"/>
-    <ion-card-content>
-      <ion-card-title>
-        {{ product.name }}
-      </ion-card-title>
-      <ion-item>
-        {{ product.price }}.- CHF
-        <ion-badge>{{ product.unit }}</ion-badge>
-      </ion-item>
-      <button
-        ion-button
-        color="light"
-        (click)="navCtrl.push('ProductPage', { item: product })">
-        Details
-      </button>
-      <ion-list inset>
-        <button
-          ion-item
-          *ngFor="let supplier of product.suppliers"
-          (click)="navCtrl.push('SupplierPage', { item: supplier })">
-          {{ supplier.firstName }}
-        </button>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <ion-list>
+    <ion-list-header>
+      Légumes
+    </ion-list-header>
+
+    <button
+      ion-item
+      *ngFor="let product of products"
+      (click)="navCtrl.push('ProductPage', { product: product })">
+      <ion-avatar item-start>
+        <img src="assets/imgs/{{ product.picturePath }}">
+      </ion-avatar>
+      <h2>{{ product.name }}</h2>
+      <h3>{{ product.price }}.- CHF <ion-badge>{{ product.unit }}</ion-badge></h3>
+      <p>{{ product.stock }} {{ product.unit }} disponibles</p>
+    </button>
+  </ion-list>
 </ion-content>

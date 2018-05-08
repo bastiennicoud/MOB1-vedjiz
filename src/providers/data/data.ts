@@ -41,7 +41,9 @@ export class DataProvider {
     this.products.push(
       new Product('Aubergine', 4, 'Kg', 22, 'products/aubergine.jpg', [this.suppliers[0], this.suppliers[2]]),
       new Product('Patates', 2, 'Kg', 45, 'products/potatoes.jpg', [this.suppliers[2], this.suppliers[1]]),
-      new Product('Carrotes', 4, 'Kg', 22, 'products/carots.jpg', [this.suppliers[0], this.suppliers[2]])
+      new Product('Carrotes', 4, 'Kg', 22, 'products/carots.jpg', [this.suppliers[0], this.suppliers[2]]),
+      new Product('Poivrons', 6, 'Kg', 8, 'products/peppers.jpeg', [this.suppliers[0], this.suppliers[1]]),
+      new Product('Tomates', 6, 'Kg', 16, 'products/tomatoes.jpg', [this.suppliers[2], this.suppliers[0]])
     )
   }
 

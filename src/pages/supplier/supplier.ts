@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Supplier } from '../../models/supplier';
 
 /**
  * Generated class for the SupplierPage page.
@@ -15,7 +16,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SupplierPage {
 
+  private supplier: Supplier
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.supplier = this.navParams.get('supplier')
   }
 
   ionViewDidLoad() {

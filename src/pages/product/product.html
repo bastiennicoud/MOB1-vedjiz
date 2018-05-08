@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>product</ion-title>
+    <ion-title>{{ product.name }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,23 +18,21 @@
     <img src="assets/imgs/{{ product.picturePath }}"/>
     <ion-card-content>
       <ion-card-title>
-        {{ product.name }}
+        <ion-item>
+          <ion-label stacked>Nom du produit</ion-label>
+          <ion-input type="text" [(ngModel)]="product.name"></ion-input>
+        </ion-item>
       </ion-card-title>
       <ion-item>
         {{ product.price }}.- CHF
         <ion-badge>{{ product.unit }}</ion-badge>
       </ion-item>
-      <button
-        ion-button
-        color="light"
-        (click)="navCtrl.push('ProductPage', { item: product })">
-        Details
-      </button>
       <ion-list inset>
         <button
           ion-item
-          *ngFor="let supplier of product.suppliers">
-          {{ supplier.firstName }}
+          *ngFor="let supplier of product.suppliers"
+          (click)="navCtrl.push('SupplierPage', { supplier: supplier })">
+          {{ supplier.firstName }} {{ supplier.lastName }}
         </button>
       </ion-list>
     </ion-card-content>

@@ -7,12 +7,22 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>supplier</ion-title>
+    <ion-title>{{ supplier.firstName }} {{ supplier.lastName }}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-<h1>tutu</h1>
+  <ion-card>
+    <ion-card-content>
+      <ion-card-title>
+        {{ supplier.firstName }} {{ supplier.lastName }}
+      </ion-card-title>
+      <ion-item>
+        {{ supplier.phone }}
+      </ion-item>
+      <ion-badge>{{ supplier.companyName }}</ion-badge>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
