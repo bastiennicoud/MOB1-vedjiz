@@ -19,13 +19,21 @@
     <ion-card-content>
       <ion-card-title>
         <ion-item>
-          <ion-label stacked>Nom du produit</ion-label>
-          <ion-input type="text" [(ngModel)]="product.name"></ion-input>
+          <ion-input type="text" (change)="valuesChanged()" [(ngModel)]="product.name"></ion-input>
         </ion-item>
       </ion-card-title>
       <ion-item>
-        {{ product.price }}.- CHF
-        <ion-badge>{{ product.unit }}</ion-badge>
+        <ion-label>
+          Chf
+        </ion-label>
+        <ion-input type="text" (change)="valuesChanged()" [(ngModel)]="product.price"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" (change)="valuesChanged()" [(ngModel)]="product.unit"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="modified" >
+        <button ion-button (click)="abort()" color="light">Abandonner</button>
+        <button ion-button (click)="save()" color="light">Sauvegarder</button>
       </ion-item>
       <ion-list inset>
         <button
