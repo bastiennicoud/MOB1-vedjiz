@@ -15,31 +15,36 @@
 
 <ion-content padding>
   <ion-card>
-    <img src="assets/imgs/{{ productCopy.picturePath }}"/>
+    <img src="assets/imgs/{{ product.picturePath }}"/>
     <ion-card-content>
-      <ion-card-title>
-        <ion-item>
-          <ion-input type="text" (change)="valuesChanged()" [(ngModel)]="productCopy.name"></ion-input>
-        </ion-item>
-      </ion-card-title>
-      <ion-item>
-        <ion-label>
-          Chf
-        </ion-label>
-        <ion-input type="text" (change)="valuesChanged()" [(ngModel)]="productCopy.price"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input type="text" (change)="valuesChanged()" [(ngModel)]="productCopy.stock"></ion-input>
-        <ion-input type="text" (change)="valuesChanged()" [(ngModel)]="productCopy.unit"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="modified" >
-        <button ion-button (click)="abort()" color="light">Abandonner</button>
-        <button ion-button (click)="save()" color="light">Sauvegarder</button>
+      <form [formGroup]="productForm">
+        <ion-list>
+          <ion-item>
+            <ion-label stacked>Nom</ion-label>
+            <ion-input formControlName="name" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Prix</ion-label>
+            <ion-input formControlName="price" type="number"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Unité</ion-label>
+            <ion-input formControlName="unit" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked>Stoque</ion-label>
+            <ion-input formControlName="stock" type="number"></ion-input>
+          </ion-item>
+        </ion-list>
+      </form>
+      <ion-item *ngIf="productForm.dirty" >
+        <button ion-button outline (click)="abort()">Abandonner</button>
+        <button ion-button outline (click)="save()">Sauvegarder</button>
       </ion-item>
       <ion-list inset>
         <button
           ion-item
-          *ngFor="let supplier of productCopy.suppliers"
+          *ngFor="let supplier of product.suppliers"
           (click)="navCtrl.push('SupplierPage', { supplier: supplier })">
           {{ supplier.firstName }} {{ supplier.lastName }}
         </button>

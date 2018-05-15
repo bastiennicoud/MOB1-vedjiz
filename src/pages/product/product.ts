@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Product } from '../../models/product';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 /**
  * Generated class for the ProductPage page.
@@ -18,20 +19,22 @@ export class ProductPage {
 
   private product: Product
 
-  private productCopy: Product
+  private productForm: FormGroup
 
   private modified: boolean
 
-  constructor(public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public formBuilder: FormBuilder, public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams) {
     this.product = this.navParams.get('product')
-    this.productCopy = new Product(
-      this.product.getName(),
-      this.product.getPrice(),
-      this.product.getUnit(),
-      this.product.getStock(),
-      this.product.getPicturePath(),
-      this.product.getSuppliers()
-    )
+    this.initForm()
+  }
+
+  initForm () {
+    this.productForm = this.formBuilder.group({
+      name: [this.product.getName()],
+      price: [this.product.getPrice()],
+      stock: [this.product.getStock()],
+      unit: [this.product.getUnit()]
+    })
   }
 
   ionViewDidLoad() {
@@ -43,32 +46,27 @@ export class ProductPage {
   }
 
   ionViewCanLeave() {
-    if(this.modified) {
+    if(this.productForm.dirty) {
       let toast = this.toastCtrl.create({
         message: "Il faut sauver ou abandonner les modifications."
       })
       toast.present()
+      return false
     } else {
       return true
     }
   }
 
   save() {
-    this.product.setName(this.productCopy.getName())
-    this.product.setPrice(this.productCopy.getPrice())
-    this.product.setUnit(this.productCopy.getUnit())
-    this.product.setStock(this.productCopy.getStock())
-    this.product.setPicturePath(this.productCopy.getPicturePath())
-    this.modified = false
+    this.product.setName(this.productForm.controls.name.value)
+    this.product.setPrice(this.productForm.controls.price.value)
+    this.product.setUnit(this.productForm.controls.unit.value)
+    this.product.setStock(this.productForm.controls.stock.value)
+    this.initForm()
   }
 
   abort() {
-    this.productCopy.setName(this.product.getName())
-    this.productCopy.setPrice(this.product.getPrice())
-    this.productCopy.setUnit(this.product.getUnit())
-    this.productCopy.setStock(this.product.getStock())
-    this.productCopy.setPicturePath(this.product.getPicturePath())
-    this.modified = false
+    this.initForm()
   }
 
 }
