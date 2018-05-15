@@ -44,6 +44,54 @@ export class Product {
     this.suppliers   = suppliers
   }
 
+	public getSuppliers() {
+		return this.suppliers;
+	}
+
+	public setSuppliers(suppliers) {
+		this.suppliers = suppliers;
+	}
+
+	public getPicturePath() {
+		return this.picturePath;
+	}
+
+	public setPicturePath(picturePath) {
+		this.picturePath = picturePath;
+	}
+
+	public getStock() {
+		return this.stock;
+	}
+
+	public setStock(stock) {
+		this.stock = stock;
+	}
+
+	public getUnit() {
+		return this.unit;
+	}
+
+	public setUnit(unit) {
+		this.unit = unit;
+	}
+
+	public getPrice() {
+		return this.price;
+	}
+
+	public setPrice(price) {
+		this.price = price;
+	}
+
+	public getName() {
+		return this.name;
+	}
+
+	public setName(name) {
+		this.name = name;
+	}
+
   addSupplier (supplier: Supplier) {
     this.suppliers.push(supplier)
   }

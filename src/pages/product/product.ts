@@ -18,10 +18,20 @@ export class ProductPage {
 
   private product: Product
 
+  private productCopy: Product
+
   private modified: boolean
 
   constructor(public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams) {
     this.product = this.navParams.get('product')
+    this.productCopy = new Product(
+      this.product.getName(),
+      this.product.getPrice(),
+      this.product.getUnit(),
+      this.product.getStock(),
+      this.product.getPicturePath(),
+      this.product.getSuppliers()
+    )
   }
 
   ionViewDidLoad() {
@@ -44,11 +54,21 @@ export class ProductPage {
   }
 
   save() {
-
+    this.product.setName(this.productCopy.getName())
+    this.product.setPrice(this.productCopy.getPrice())
+    this.product.setUnit(this.productCopy.getUnit())
+    this.product.setStock(this.productCopy.getStock())
+    this.product.setPicturePath(this.productCopy.getPicturePath())
+    this.modified = false
   }
 
   abort() {
-
+    this.productCopy.setName(this.product.getName())
+    this.productCopy.setPrice(this.product.getPrice())
+    this.productCopy.setUnit(this.product.getUnit())
+    this.productCopy.setStock(this.product.getStock())
+    this.productCopy.setPicturePath(this.product.getPicturePath())
+    this.modified = false
   }
 
 }
