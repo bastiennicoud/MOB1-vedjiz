@@ -76,6 +76,10 @@
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/splash-screen/-/splash-screen-4.7.0.tgz#e22c41e986cfc5e8ff12db7fc464c2daf9206037"
 
+"@ionic-native/sqlite@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/sqlite/-/sqlite-4.7.0.tgz#9953e875558ce74426d380cd22a83ede20edb139"
+
 "@ionic-native/status-bar@4.7.0":
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/status-bar/-/status-bar-4.7.0.tgz#f292bf67c2d5fef43b1fc7b442f5bc75139cc8e3"

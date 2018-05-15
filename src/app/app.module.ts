@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { SearchPage } from '../pages/search/search';
 import { DataProvider } from '../providers/data/data';
 import { HttpClientModule } from '@angular/common/http';
+import { SQLite } from '@ionic-native/sqlite';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataProvider
+    DataProvider,
+    SQLite
   ]
 })
 export class AppModule {}

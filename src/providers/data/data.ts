@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Product } from '../../models/product';
-import { Supplier } from '../../models/supplier';
-import { User } from '../../models/user';
+import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { Product } from '../../models/product'
+import { Supplier } from '../../models/supplier'
+import { User } from '../../models/user'
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite'
 
 /*
   Generated class for the DataProvider provider.
@@ -28,7 +29,7 @@ export class DataProvider {
    */
   private users: Array<User> = []
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, private sqlite: SQLite) {
     this.users.push(
       new User('John', 'Doe', '30488484', 'Une adresse'),
       new User('Toto', 'Tutu', '034949494', 'Mn adresse')
