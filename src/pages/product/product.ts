@@ -21,8 +21,6 @@ export class ProductPage {
 
   private productForm: FormGroup
 
-  private modified: boolean
-
   constructor(public formBuilder: FormBuilder, public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams) {
     this.product = this.navParams.get('product')
     this.initForm()
@@ -35,14 +33,6 @@ export class ProductPage {
       stock: [this.product.getStock()],
       unit: [this.product.getUnit()]
     })
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductPage');
-  }
-
-  valuesChanged() {
-    this.modified = true
   }
 
   ionViewCanLeave() {
