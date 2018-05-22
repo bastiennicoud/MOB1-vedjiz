@@ -14,7 +14,16 @@ export class HomePage {
   dataProviderVersion: string
 
   constructor(public navCtrl: NavController, private dataProvider: DataProvider) {
-    this.products = dataProvider.getProducts()
+    this.dataProvider.getDatabaseState().subscribe(rdy => {
+      if (rdy) {
+        this.loadProducts()
+      }
+    })
   }
 
+  private loadProducts () {
+    this.dataProvider.getProducts().then(data => {
+      this.products = data
+    })
+  }
 }

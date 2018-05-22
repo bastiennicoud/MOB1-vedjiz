@@ -4,6 +4,12 @@ import { Product } from '../../models/product'
 import { Supplier } from '../../models/supplier'
 import { User } from '../../models/user'
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite'
+import { SQLitePorter } from '@ionic-native/sqlite-porter'
+import { Platform } from 'ionic-angular'
+import { BehaviorSubject } from 'rxjs/Rx'
+import { Storage } from '@ionic/storage'
+import 'rxjs/add/operator/map'
+import { Http } from '@angular/http'
 
 /*
   Generated class for the DataProvider provider.
@@ -29,7 +35,34 @@ export class DataProvider {
    */
   private users: Array<User> = []
 
-  constructor(public http: HttpClient, private sqlite: SQLite) {
+  /**
+   * Store the database object
+   */
+  private database: SQLiteObject
+
+  /**
+   * Retrive the actual state of the connexion
+   */
+  private databaseReady: BehaviorSubject<boolean>
+
+  constructor(public http: HttpClient, public sqlitePorter: SQLitePorter, private sqlite: SQLite, private storage: Storage, public platform: Platform) {
+    this.databaseReady = new BehaviorSubject(false)
+    this.platform.ready().then(() => {
+      this.sqlite.create({
+        name: 'vedjiz.db',
+        location: 'default'
+      }).then((db: SQLiteObject) => {
+        this.database = db
+        this.storage.get('database_filled').then(val => {
+          if (val) {
+            this.databaseReady.next(true)
+          } else {
+            this.fillDatabase()
+          }
+        })
+      })
+    })
+
     this.users.push(
       new User('John', 'Doe', '30488484', 'Une adresse'),
       new User('Toto', 'Tutu', '034949494', 'Mn adresse')
@@ -48,28 +81,59 @@ export class DataProvider {
     )
   }
 
+  private fillDatabase () {
+    this.http.get('assets/sqlDump.sql')
+      .map(res => res.text())
+      .subscribe(sql => {
+        this.sqlitePorter.importSqlToDb(this.database, sql)
+          .then(data => {
+            this.databaseReady.next(true)
+            this.storage.set('database_filled', true)
+          })
+          .catch(e => console.error(e))
+      })
+  }
+
+  public addProduct (product: Product) {
+    let data = [product.getName(), product.getPrice(), product.getUnit(), product.getStock(), product.getPicturePath()]
+    return this.database.executeSql(
+      'INSERT INTO `products` (name, price, unit, stock, path) VALUES ("onions", 23.5, "kg", 10.0, "toto")',
+      data
+    ).then(data => {
+      return data
+    }, err => {
+      console.error('Error : ', err)
+      return err
+    })
+  }
+
   public getProducts () {
-    return this.products
+    return this.database.executeSql('SELECT * FROM products', []).then(data => {
+      let products = []
+      if (data.row.length > 0) {
+        for (let i = 0; i < data.rows.length; i++) {
+          products.push(new Product(
+            data.rows.item(i).name,
+            data.rows.item(i).price,
+            data.rows.item(i).unit,
+            data.rows.item(i).stock,
+            data.rows.item(i).path
+          ))
+        }
+      }
+      return products
+    }, err => {
+      console.error('Error : ', err)
+      return []
+    })
   }
 
-  public getSuppliers () {
-    return this.suppliers
+  public getProduct () {
+
   }
 
-  public getUsers () {
-    return this.users
-  }
-
-  public getProduct (id: number) {
-    return this.products[id]
-  }
-
-  public getSupplier (id: number) {
-    return this.suppliers[id]
-  }
-
-  public getUser (id: number) {
-    return this.users[id]
+  getDatabaseState() {
+    return this.databaseReady.asObservable();
   }
 
 }

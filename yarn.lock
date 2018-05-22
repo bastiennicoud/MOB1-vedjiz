@@ -76,6 +76,10 @@
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/splash-screen/-/splash-screen-4.7.0.tgz#e22c41e986cfc5e8ff12db7fc464c2daf9206037"
 
+"@ionic-native/sqlite-porter@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/sqlite-porter/-/sqlite-porter-4.7.0.tgz#45c514dd26684804f6bfb7030b2512150c86dfbb"
+
 "@ionic-native/sqlite@^4.7.0":
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/sqlite/-/sqlite-4.7.0.tgz#9953e875558ce74426d380cd22a83ede20edb139"
@@ -3851,6 +3855,10 @@ uglifyjs-webpack-plugin@^0.4.6:
     source-map "^0.5.6"
     uglify-js "^2.8.29"
     webpack-sources "^1.0.1"
+
+uk.co.workingedge.cordova.plugin.sqliteporter@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/uk.co.workingedge.cordova.plugin.sqliteporter/-/uk.co.workingedge.cordova.plugin.sqliteporter-1.0.2.tgz#3e2c2df0caafc257091f528b57e2327e467d7fee"
 
 ultron@~1.1.0:
   version "1.1.1"
