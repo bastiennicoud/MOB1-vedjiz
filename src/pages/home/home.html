@@ -20,7 +20,7 @@
       *ngFor="let product of products"
       (click)="navCtrl.push('ProductPage', { product: product })">
       <ion-avatar item-start>
-        <img src="assets/imgs/{{ product.picturePath }}">
+        <img src="{{ product.picturePath }}">
       </ion-avatar>
       <h2>{{ product.name }}</h2>
       <h3>{{ product.price }}.- CHF <ion-badge>{{ product.unit }}</ion-badge></h3>
