@@ -29,7 +29,22 @@ export class DataProvider {
   }
 
   public addProduct (product: Product) {
-
+    return new Promise<Array<Product>>((resolve, reject) => {
+      this.storage.get('products').then(val => {
+        val.push({
+          productName: product.getName(),
+          price:       product.getPrice(),
+          unitName:    product.getUnit(),
+          stock:       product.getStock(),
+          picture:     product.getPicturePath()
+        })
+        this.storage.set('products', val).then(() => {
+          resolve(val)
+        })
+      }).catch((err) => {
+        reject(err)
+      })
+    })
   }
 
   public getProducts () {
