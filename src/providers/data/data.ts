@@ -3,12 +3,10 @@ import { Injectable } from '@angular/core'
 import { Product } from '../../models/product'
 import { Supplier } from '../../models/supplier'
 import { User } from '../../models/user'
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite'
-import { SQLitePorter } from '@ionic-native/sqlite-porter'
 import { Platform } from 'ionic-angular'
 import { BehaviorSubject } from 'rxjs/Rx'
 import { Storage } from '@ionic/storage'
-import 'rxjs/add/operator/map'
+import 'rxjs'
 import { Http } from '@angular/http'
 
 /*
