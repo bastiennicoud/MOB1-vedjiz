@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Product } from '../../models/product';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { DataProvider } from '../../providers/data/data';
 
 /**
  * Generated class for the ProductPage page.
@@ -17,12 +18,14 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class ProductPage {
 
+  private dataProvider: DataProvider
   private product: Product
 
   private productForm: FormGroup
 
   constructor(public formBuilder: FormBuilder, public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams) {
     this.product = this.navParams.get('product')
+    this.dataProvider = this.navParams.get('dataProvider')
     this.initForm()
   }
 
@@ -52,7 +55,9 @@ export class ProductPage {
     this.product.setPrice(this.productForm.controls.price.value)
     this.product.setUnit(this.productForm.controls.unit.value)
     this.product.setStock(this.productForm.controls.stock.value)
-    this.initForm()
+    this.dataProvider.saveProductDatas(this.product).then(() => {
+      this.initForm()
+    })
   }
 
   abort() {

@@ -5,6 +5,11 @@ import { Supplier } from './supplier'
  */
 export class Product {
 
+	/**
+	 * Id
+	 */
+  private id: number
+
   /**
    * Name of the product
    */
@@ -35,14 +40,23 @@ export class Product {
    */
   private suppliers: Array<Supplier>
 
-  constructor (name: string, price: number, unit: string, stock: number, picturePath: string, suppliers: Array<Supplier> = []) {
+  constructor (id: number, name: string, price: number, unit: string, stock: number, picturePath: string, suppliers: Array<Supplier> = []) {
+		this.id          = id
     this.name        = name
     this.price       = price
     this.unit        = unit
     this.stock       = stock
     this.picturePath = picturePath
     this.suppliers   = suppliers
-  }
+	}
+
+	public getId() {
+		return this.id
+	}
+
+	public setId(id) {
+		this.id = id
+	}
 
 	public getSuppliers() {
 		return this.suppliers;

@@ -27,7 +27,7 @@
     <button
       ion-item
       *ngFor="let product of products"
-      (click)="navCtrl.push('ProductPage', { product: product })">
+      (click)="navCtrl.push('ProductPage', { product: product, dataProvider: dataProvider })">
       <ion-avatar item-start>
         <img src="{{ product.picturePath }}">
       </ion-avatar>
