@@ -23,18 +23,58 @@ export class DataProvider {
   }
 
   /**
+   * ! For dev purpose
+   * reset the last update value
+   */
+  public resetLastUpdate () {
+    this.storage.set('last_repo_update', 234567)
+  }
+
+  /**
+   * ! For dev purpose
+   * Reload datas from repo
+   */
+  public reloadFreshDatas () {
+    this.storage.set('last_repo_update', 234567).then(val => {
+      this.getFreshDatas()
+    })
+  }
+
+  public refreshDatas () {
+    return new Promise((resolve, reject) => {
+      this.getFreshDatas().then(() => {
+        resolve()
+      })
+    })
+  }
+
+  /**
    * Check if the local version on the datas is up to date
    * If not, call the backend repo and update local storage
    */
   private getFreshDatas () {
-    this.http.get('http://vedjserver.mycpnv.ch/api/v1/lastupdate').subscribe(data => {
-      this.storage.get('last_repo_update').then(val => {
-        let localUpdate = new Date(val)
-        let repoUpdate = new Date(data.updated_at)
-        if (localUpdate.getTime() < repoUpdate.getTime()) {
-          this.getFreshDatasFromApi()
-          this.storage.set('last_repo_update', repoUpdate.getTime())
-        }
+    return new Promise((resolve, reject) => {
+      // Call the distant repo
+      this.http.get('http://vedjserver.mycpnv.ch/api/v1/lastupdate').subscribe(data => {
+        // Get last local update
+        this.storage.get('last_repo_update').then(val => {
+          // Create dates for comparaison
+          let localUpdate = new Date(val)
+          let repoUpdate = new Date(data.updated_at)
+          console.log(`%cINFO : ${localUpdate.getTime()} ${repoUpdate.getTime()}`, 'color: #FFC312')
+          // Refresh local update if nesesary
+          if (localUpdate.getTime() < repoUpdate.getTime()) {
+            console.info('%cINFO : Local storage not up to date', 'color: #FFC312')
+            this.getFreshDatasFromApi().then(() => {
+              this.storage.set('last_repo_update', repoUpdate.getTime()).then(() => {
+                resolve()
+              })
+            })
+          } else {
+            console.info('%cINFO : No update needed', 'color: #FFC312')
+            resolve()
+          }
+        })
       })
     })
   }
@@ -43,8 +83,13 @@ export class DataProvider {
    * Get new products from backend
    */
   public getFreshDatasFromApi () {
-    this.http.get('http://vedjserver.mycpnv.ch/api/v1/vegetables').subscribe((data) => {
-      this.storage.set('products', data)
+    return new Promise((resolve, reject) => {
+      this.http.get('http://vedjserver.mycpnv.ch/api/v1/vegetables').subscribe((data) => {
+        this.storage.set('products', data).then(() => {
+          console.info('%cINFO : Local storage updated', 'color: #009432')
+          resolve()
+        })
+      })
     })
   }
 

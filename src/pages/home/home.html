@@ -10,6 +10,15 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="refreshVedjizz($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
     <ion-list-header>
       Légumes
@@ -32,5 +41,7 @@
 <ion-footer>
   <ion-toolbar>
     <button ion-button>Ajouter</button>
+    <button (click)="dataProvider.resetLastUpdate()" ion-button>Reset Update</button>
+    <button (click)="dataProvider.reloadFreshDatas()" ion-button>Reload datas</button>
   </ion-toolbar>
 </ion-footer>

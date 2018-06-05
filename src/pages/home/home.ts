@@ -22,4 +22,11 @@ export class HomePage {
       this.products = data
     })
   }
+
+  private refreshVedjizz (e) {
+    this.dataProvider.refreshDatas().then(val => {
+      this.loadProducts()
+      e.complete()
+    })
+  }
 }
