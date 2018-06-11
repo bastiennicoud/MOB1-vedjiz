@@ -41,13 +41,9 @@ export class DataProvider {
     })
   }
 
-  public refreshDatas ()
+  public async refreshDatas ()
   {
-    return new Promise((resolve, reject) => {
-      this.getFreshDatas().then(() => {
-        resolve()
-      })
-    })
+    return await this.getFreshDatas()
   }
 
   /**
@@ -56,15 +52,16 @@ export class DataProvider {
    */
   private async getFreshDatas ()
   {
-    return new Promise((resolve, reject) => {
-      // Call the distant repo
-      this.checkUpToDate().then(
-
-      )
-    })
+    // Call the distant repo
+    if (await this.isUpToDate()) {
+      await this.getFreshDatasFromApi()
+    }
   }
 
-  private checkUpToDate ()
+  /**
+   * Check if the local copy is up to date with the back-end
+   */
+  private isUpToDate ()
   {
     return new Promise((resolve, reject) => {
       this.http.get<any>('http://vedjserver.mycpnv.ch/api/v1/lastupdate').subscribe(data => {
@@ -73,11 +70,8 @@ export class DataProvider {
           let repoUpdate = new Date(data.updated_at)
           if (localUpdate.getTime() < repoUpdate.getTime()) {
             console.info('%cINFO : Local storage not up to date', 'color: #FFC312')
-            resolve(true)
-            this.getFreshDatasFromApi().then(() => {
-              this.storage.set('last_repo_update', repoUpdate.getTime()).then(() => {
-                resolve()
-              })
+            this.storage.set('last_repo_update', repoUpdate.getTime()).then(() => {
+              resolve(true)
             })
           } else {
             console.info('%cINFO : No update needed', 'color: #FFC312')
