@@ -85,16 +85,10 @@ export class DataProvider {
   /**
    * Get new products from backend
    */
-  public getFreshDatasFromApi ()
+  public async getFreshDatasFromApi ()
   {
-    return new Promise((resolve, reject) => {
-      this.http.get<productJSON[]>('http://vedjserver.mycpnv.ch/api/v1/vegetables').subscribe((data) => {
-        this.storage.set('products', data).then(() => {
-          console.info('%cINFO : Local storage updated', 'color: #009432')
-          resolve()
-        })
-      })
-    })
+    let datas = await this.http.get<productJSON[]>('http://vedjserver.mycpnv.ch/api/v1/vegetables').toPromise()
+    return await this.storage.set('products', datas)
   }
 
   /**
