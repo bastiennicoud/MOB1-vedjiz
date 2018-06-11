@@ -1,13 +1,11 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Product } from '../../models/product'
-import { Supplier } from '../../models/supplier'
-import { User } from '../../models/user'
 import { Platform } from 'ionic-angular'
-import { BehaviorSubject } from 'rxjs/Rx'
+import { productJSON } from '../../apiShemas/productsJSON'
 import { Storage } from '@ionic/storage'
 import 'rxjs'
-import { Http } from '@angular/http'
+
 
 /*
   Generated class for the DataProvider provider.
@@ -56,20 +54,26 @@ export class DataProvider {
    * Check if the local version on the datas is up to date
    * If not, call the backend repo and update local storage
    */
-  private getFreshDatas ()
+  private async getFreshDatas ()
   {
     return new Promise((resolve, reject) => {
       // Call the distant repo
-      this.http.get('http://vedjserver.mycpnv.ch/api/v1/lastupdate').subscribe(data => {
-        // Get last local update
+      this.checkUpToDate().then(
+
+      )
+    })
+  }
+
+  private checkUpToDate ()
+  {
+    return new Promise((resolve, reject) => {
+      this.http.get<any>('http://vedjserver.mycpnv.ch/api/v1/lastupdate').subscribe(data => {
         this.storage.get('last_repo_update').then(val => {
-          // Create dates for comparaison
           let localUpdate = new Date(val)
           let repoUpdate = new Date(data.updated_at)
-          console.log(`%cINFO : ${localUpdate.getTime()} ${repoUpdate.getTime()}`, 'color: #FFC312')
-          // Refresh local update if nesesary
           if (localUpdate.getTime() < repoUpdate.getTime()) {
             console.info('%cINFO : Local storage not up to date', 'color: #FFC312')
+            resolve(true)
             this.getFreshDatasFromApi().then(() => {
               this.storage.set('last_repo_update', repoUpdate.getTime()).then(() => {
                 resolve()
@@ -77,7 +81,7 @@ export class DataProvider {
             })
           } else {
             console.info('%cINFO : No update needed', 'color: #FFC312')
-            resolve()
+            resolve(false)
           }
         })
       })
@@ -90,7 +94,7 @@ export class DataProvider {
   public getFreshDatasFromApi ()
   {
     return new Promise((resolve, reject) => {
-      this.http.get('http://vedjserver.mycpnv.ch/api/v1/vegetables').subscribe((data) => {
+      this.http.get<productJSON[]>('http://vedjserver.mycpnv.ch/api/v1/vegetables').subscribe((data) => {
         this.storage.set('products', data).then(() => {
           console.info('%cINFO : Local storage updated', 'color: #009432')
           resolve()
