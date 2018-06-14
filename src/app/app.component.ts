@@ -3,9 +3,9 @@ import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { NavController } from 'ionic-angular'
 import { HomePage } from '../pages/home/home';
 import { SearchPage } from '../pages/search/search';
+import { SynchroPage } from '../pages/synchro/synchro';
 
 @Component({
   templateUrl: 'app.html'
@@ -30,6 +30,7 @@ export class MyApp {
 
     // Initialize all the pages
     this.pages = [
+      { title: 'Synchro', component: SynchroPage},
       { title: 'Rechercher', component: SearchPage },
       { title: 'Accueil', component: HomePage }
     ]
@@ -38,7 +39,7 @@ export class MyApp {
   /**
    * Change the app page
    *
-   * @param page 
+   * @param page
    */
   openPage(page) {
     this.nav.setRoot(page.component)
