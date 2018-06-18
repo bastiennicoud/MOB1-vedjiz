@@ -14,5 +14,21 @@
 
 
 <ion-content padding>
+  <ion-list>
+    <ion-list-header>
+      Légumes modifiés
+    </ion-list-header>
 
+    <button
+      ion-item
+      *ngFor="let product of products"
+      (click)="navCtrl.push('ProductPage', { product: product, dataProvider: dataProvider })">
+      <ion-avatar item-start>
+        <img src="{{ product.picturePath }}">
+      </ion-avatar>
+      <h2>{{ product.name }}</h2>
+      <h3>{{ product.price }}.- CHF <ion-badge>{{ product.unit }}</ion-badge></h3>
+      <p>{{ product.stock }} {{ product.unit }} disponibles</p>
+    </button>
+  </ion-list>
 </ion-content>
